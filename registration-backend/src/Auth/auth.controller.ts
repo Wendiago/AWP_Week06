@@ -9,7 +9,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/register')
-  signUp(@Body() registerDto: RegisterDto): Promise<{ token: string }> {
+  register(@Body() registerDto: RegisterDto): Promise<{ token: string }> {
+    console.log('Registration attempt:', registerDto);
     return this.authService.register(registerDto);
   }
 
@@ -19,7 +20,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('info')
+  @Get('/info')
   getInfo(@Req() request) {
     const user = request.user;
     return {
@@ -28,5 +29,10 @@ export class AuthController {
       name: user.name,
       createdAt: user.createdAt,
     };
+  }
+
+  @Get('/test')
+  test(): string {
+    return 'this is a test';
   }
 }

@@ -39,13 +39,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {});
 
   const register = async (data: TRegisterSchema) => {
-    const response = await axios.post("/user/register", data);
+    const response = await customAxios.post("/user/register", data);
     console.log("Register: ", response);
     //localStorage.setItem("token", response.data.token);
   };
 
   const login = async (data: TLoginSchema) => {
-    const response = await axios.post("/user/login", data);
+    const response = await customAxios.post("/user/login", data);
     console.log("Login: ", response);
     //localStorage.setItem("token", response.data.token);
   };

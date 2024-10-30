@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { registerSchema, TRegisterSchema } from "../types/type";
 import { useAuth } from "../context/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 export default function Register() {
   const {
     register,
@@ -11,14 +11,13 @@ export default function Register() {
     reset,
   } = useForm<TRegisterSchema>({ resolver: zodResolver(registerSchema) });
   const auth = useAuth();
-
+  const navigate = useNavigate();
   const onSubmit = async (data: TRegisterSchema) => {
     try {
       const response = auth.register(data);
     } catch (error) {
       console.log("Register error: ", error);
     }
-    reset();
     reset();
   };
 
@@ -79,6 +78,16 @@ export default function Register() {
       >
         Register
       </button>
+
+      <span className="m-[0_auto] ">
+        Already had an account?{" "}
+        <a
+          className="text-primary font-semibold cursor-pointer"
+          onClick={() => navigate("/login")}
+        >
+          Log in now
+        </a>
+      </span>
     </form>
   );
 }

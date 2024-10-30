@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginSchema, TLoginSchema } from "../types/type";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const {
     register,
@@ -9,7 +10,7 @@ export default function Login() {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<TLoginSchema>({ resolver: zodResolver(loginSchema) });
-
+  const navigate = useNavigate();
   const auth = useAuth();
 
   const onSubmit = async (data: TLoginSchema) => {
@@ -62,6 +63,16 @@ export default function Login() {
       >
         Log in
       </button>
+
+      <span className="m-[0_auto] ">
+        Haven't had an account yet?{" "}
+        <a
+          className="text-primary font-semibold cursor-pointer"
+          onClick={() => navigate("/register")}
+        >
+          Sign up now
+        </a>
+      </span>
     </form>
   );
 }
